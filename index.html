@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Ulang Tahun, Cinta!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) rotate(180deg) scale(1.1); }
+      100% { transform: translateY(0) rotate(360deg) scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      40% { transform: scale(1); }
+      60% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0); }
+    }
+
+    .heart {
+      position: fixed;
+      color: #ff90b3;
+      font-size: 24px;
+      animation: float 3s infinite ease-in-out;
+      z-index: 1;
+      pointer-events: none;
+      text-shadow: 0 0 5px rgba(255, 144, 179, 0.5);
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, #fff 10%, transparent 70%);
+      animation: sparkle 2s infinite;
+    }
+
+    #gift-popup::before {
+      content: '💝';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;
+      animation: heartBeat 1.5s infinite;
+    }
+
+    #gift-popup button::after {
+      content: '💖';
+      margin-left: 8px;
+    }
+
+    .gift-card:hover::after {
+      content: '✨';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 20px;
+      animation: sparkle 1s infinite;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(45deg, #ffe5ec, #ffe0f7, #ffd1dc, #ffb6c1);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .start-button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-button .envelope {
+      display: inline-block;
+      animation: envelopeWiggle 2s infinite;
+    }
+
+    @keyframes envelopeWiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-10deg); }
+      75% { transform: rotate(10deg); }
+    }
+
+    section::before,
+    section::after {
+      content: '💕';
+      position: absolute;
+      font-size: 2em;
+      animation: floatHeart 3s ease-in-out infinite;
+      opacity: 0.5;
+    }
+
+    section::before {
+      left: 10%;
+      animation-delay: 0.5s;
+    }
+
+    section::after {
+      right: 10%;
+      animation-delay: 1s;
+    }
+
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    h1, h2 {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      transition: all 0.5s ease;
+      animation: fadeIn 1s ease-out;
+    }
+
+    section.hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      display: none;
+    }
+
+    button {
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 144, 179, 0.5);
+    }
+
+    .gift-card {
+      transition: all 0.3s ease;
+    }
+
+    .gift-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    h1,
+    h2,
+    p {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #ff90b3;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 100px);
+      grid-template-rows: repeat(4, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Heart shape positioning */
+    .gallery img:nth-child(1) { grid-area: 2 / 2 / 3 / 3; }
+    .gallery img:nth-child(2) { grid-area: 1 / 3 / 2 / 4; }
+    .gallery img:nth-child(3) { grid-area: 2 / 4 / 3 / 5; }
+    .gallery img:nth-child(4) { grid-area: 2 / 1 / 3 / 2; }
+    .gallery img:nth-child(5) { grid-area: 2 / 5 / 3 / 6; }
+    .gallery img:nth-child(6) { grid-area: 3 / 2 / 4 / 3; }
+    .gallery img:nth-child(7) { grid-area: 3 / 3 / 4 / 4; }
+    .gallery img:nth-child(8) { grid-area: 3 / 4 / 4 / 5; }
+    .gallery img:nth-child(9) { grid-area: 4 / 3 / 5 / 4; }
+
+    .gift-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .gift-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 15px;
+      width: 200px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .gift-card img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    #popup,
+    #gift-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(255, 144, 179, 0.3);
+      z-index: 10;
+      display: none;
+      max-width: 90%;
+      backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 144, 179, 0.2);
+      text-align: center;
+    }
+
+    input[type="datetime-local"] {
+      padding: 12px 15px;
+      border: 2px solid #ffb6c1;
+      border-radius: 15px;
+      font-size: 16px;
+      width: 100%;
+      margin: 15px 0;
+      background: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s ease;
+    }
+
+    input[type="datetime-local"]:focus {
+      outline: none;
+      border-color: #ff90b3;
+      box-shadow: 0 0 10px rgba(255, 144, 179, 0.3);
+    }
+
+    #gift-text {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #ff6b9c;
+      line-height: 1.5;
+    }
+
+    #gift-popup button {
+      background: linear-gradient(45deg, #ff90b3, #ff6b9c);
+      padding: 12px 30px;
+      font-size: 1.1em;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    #gift-popup button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 144, 179, 0.4);
+    }
+
+    .close-btn {
+      position: absolute !important;
+      top: 10px;
+      right: 10px;
+      background: none !important;
+      padding: 5px 10px !important;
+      font-size: 20px !important;
+      color: #ff6b9c !important;
+      border: none;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #ff90b3 !important;
+      transform: scale(1.1) !important;
+    }
+
+    .touch-love {
+      position: fixed;
+      font-size: 2em;
+      pointer-events: none;
+      animation: touchLove 1s forwards;
+      z-index: 9999;
+    }
+
+    @keyframes touchLove {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="overlay"></div>
+  <div id="popup">
+    <p>Fayraku tersayang,<br><br>
+    <p>Delapan belas tahun adalah awal petualangan,<br>
+dan aku ingin menjadi peta dalam perjalananmu,<br>
+menjadi kompas saat kau bingung arah,<br>
+menjadi tempat singgah saat dunia terasa lelah.</p>
+    <br>
+    <p>Semoga bahagia selalu memelukmu erat,<br>
+cinta selalu menemani tiap jejak,<br>
+dan aku—selalu ada di sampingmu,<br>
+menjadi rumah tempat hatimu pulang.</p>
+    <br>
+    <button onclick="closePopup()">Tutup</button>
+  </div>
+
+  <div id="gift-popup">
+    <button class="close-btn" onclick="closeGiftPopup()">✕</button>
+    <p id="gift-text"></p>
+    <button onclick="submitGift()">Kirim</button>
+  </div>
+
+  <section id="intro">
+    <h1>🎉 Selamat Ulang Tahun, Cintaku! 🎉</h1>
+    <p>Kubuat sesuatu yang manis ini khusus untukmu, sayangku 💝</p>
+    <button onclick="nextSection('gallery')" class="start-button">
+      <span class="envelope">✉️</span> 
+      Sentuh Untuk Mulai
+    </button>
+  </section>
+
+  <section id="gallery" class="hidden">
+    <h2>📸 Kenangan Kita</h2>
+    <div class="gallery">
+      <img src="img/1.png" alt="Love 1">
+      <img src="img/2.png" alt="Love 2">
+      <img src="img/3.png" alt="Love 3">
+      <img src="img/4.png" alt="Love 4">
+      <img src="img/5.png" alt="Love 5">
+      <img src="img/6.png" alt="Love 6">
+      <img src="img/7.png" alt="Love 7">
+      <img src="img/8.png" alt="Love 8">
+      <img src="img/9.png" alt="Love 9">
+    </div>
+    <button onclick="nextSection('letter')">Selanjutnya</button>
+  </section>
+
+  <section id="letter" class="hidden">
+    <h2>💌 Sebuah Surat untukmu</h2>
+    <button onclick="openPopup()">Baca Sekarang</button>
+    <br><br>
+    <button onclick="nextSection('gift')">Selanjutnya</button>
+  </section>
+
+  <section id="gift" class="hidden">
+    <h2>🎁 Pilih Hadiahmu!</h2>
+    <p>Kamu bisa memilih satu dan beri tahu aku tanggalnya 💕</p>
+    <div class="gift-grid">
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c" alt="Movie Date">
+        <button onclick="openGiftPopup('Nonton Film Berdua 🎬')">Aku Mau Ini!</button>
+      </div>
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348" alt="Makeup">
+        <button onclick="openGiftPopup('Belanja Makeup Bareng 💄')">Aku Mau Ini!</button>
+      </div>
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1591814468924-caf88d1232e1" alt="Ramen">
+        <button onclick="openGiftPopup('Makan-makan Bersama 🍜')">Aku Mau Ini!</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="end" class="hidden">
+    <h2>🌟 Terima Kasih Sayangku!</h2>
+    <p>Aku tidak sabar untuk merayakan hari istimewa ini bersamamu 🥰</p>
+  </section>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init({
+        publicKey: "4Z_R6UvDBGM1EjmkM"
+      });
+      createHearts();
+      
+      // Add touch/click love effect
+      document.addEventListener('click', createLoveEffect);
+      document.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        createLoveEffect(e.touches[0]);
+      });
+    })();
+
+    function createLoveEffect(event) {
+      const love = document.createElement('div');
+      love.innerHTML = '💖';
+      love.className = 'touch-love';
+      love.style.left = (event.clientX || event.pageX) + 'px';
+      love.style.top = (event.clientY || event.pageY) + 'px';
+      document.body.appendChild(love);
+      
+      setTimeout(() => love.remove(), 1000);
+    }
+
+    function createHearts() {
+      const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝', '💘', '💞'];
+      for(let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+        document.body.appendChild(heart);
+
+        // Add sparkles around hearts
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = (Math.random() * 100) + '%';
+        sparkle.style.top = (Math.random() * 100) + '%';
+        sparkle.style.animationDelay = Math.random() * 2 + 's';
+        heart.appendChild(sparkle);
+      }
+    }
+
+    // Recreate hearts periodically
+    setInterval(() => {
+      const hearts = document.querySelectorAll('.heart');
+      hearts.forEach(heart => heart.remove());
+      createHearts();
+    }, 10000);
+
+    let currentSection = 'intro';
+    let selectedGift = "";
+
+    function nextSection(next) {
+      document.getElementById(currentSection).classList.add('hidden');
+      document.getElementById(next).classList.remove('hidden');
+      currentSection = next;
+    }
+
+    function openPopup() {
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    function openGiftPopup(gift) {
+      selectedGift = gift;
+      document.getElementById('gift-popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('gift-text').innerHTML = `
+        Kamu memilih "${gift}"!<br>
+        Kapan kamu mau menerimanya?<br>
+        <input type="datetime-local" id="gift-date" style="margin: 10px 0;">`;
+    }
+
+    function closeGiftPopup() {
+      document.getElementById('gift-popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    function submitGift() {
+      const date = document.getElementById('gift-date').value;
+      if (!date) return alert("Tolong pilih tanggal!");
+
+      // Send the gift choice and date to your email via EmailJS
+      emailjs.send("service_wludk7d", "template_9rzya4r", {
+        gift: selectedGift,
+        date: date,
+        to_name: "Ardi Junaedin"
+      })
+        .then(function (response) {
+          console.log("Email sent successfully", response);
+        }, function (error) {
+          console.log("Error sending email", error);
+        });
+
+      alert(`Yeay! Kamu memilih "${selectedGift}" pada tanggal ${date}. Aku akan membuatnya spesial! 💖`);
+      document.getElementById('gift-popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+      nextSection('end');
+    }
+  </script>
+
+</body>
+
+</html>
